@@ -65,6 +65,6 @@ export class Melody implements MusicComponent {
   }
 
   toString(): string {
-    return `Melody(${this.notes.map(n => n.getLetter).join(", ")})`;
+    return `Melody(${this.notes.map(n => n.getLetter()).join(", ")})`;
   }
 }

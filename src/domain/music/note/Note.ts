@@ -14,7 +14,7 @@ export class Note {
   static readonly A_SHARP = new Note(10, "A#", "LA#", "Bb", "SIb");
   static readonly B = new Note(11, "B", "SI");
 
-  static readonly VALUES = [
+  static readonly VALUES: readonly Note[] = [
     Note.C,
     Note.C_SHARP,
     Note.D,
