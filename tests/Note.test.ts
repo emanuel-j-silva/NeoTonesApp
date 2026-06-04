@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { Note } from "../src/domain/music/note/Note";
+import { Note } from "../src/domain/music/entities/note/Note";
 
 describe("Note", () => {
   test("should return correct note on non-circular transposition", () => {

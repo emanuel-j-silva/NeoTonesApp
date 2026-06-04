@@ -1,4 +1,4 @@
-import { Music } from "../Music";
+import { Music } from "../entities/Music";
 
 export interface MusicRepository{
     save(music: Music): Promise<void>;
@@ -6,7 +6,7 @@ export interface MusicRepository{
     findById(id: string): Promise<Music | null>;
 
     existsByTitle(title: string): Promise<boolean>;
-    
+
     findAll(): Promise<Music[]>;
 
     delete(id: string): Promise<void>;

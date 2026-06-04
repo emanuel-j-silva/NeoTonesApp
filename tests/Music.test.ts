@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
 
-import { Arrangement } from "../src/domain/music/Arrangement";
-import { Music } from "../src/domain/music/Music";
-import { Note } from "../src/domain/music/note/Note";
-import { ScaleType } from "../src/domain/music/note/ScaleType";
-import { Tone } from "../src/domain/music/note/Tone";
+import { Arrangement } from "../src/domain/music/entities/Arrangement";
+import { Music } from "../src/domain/music/entities/Music";
+import { Note } from "../src/domain/music/entities/note/Note";
+import { ScaleType } from "../src/domain/music/entities/note/ScaleType";
+import { Tone } from "../src/domain/music/entities/note/Tone";
 
 describe("Music", () => {
 

@@ -1,5 +1,5 @@
-import { Arrangement } from "../Arrangement";
-import { Music } from "../Music";
+import { Arrangement } from "../entities/Arrangement";
+import { Music } from "../entities/Music";
 import { CreateMusicCommand } from "./dtos/CreateMusicCommand";
 import { MusicRepository } from "./MusicRepository";
 

@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from "vitest";
 
-import { Melody } from "../src/domain/music/components/Melody";
-import { Note } from "../src/domain/music/note/Note";
+import { Melody } from "../src/domain/music/entities/components/Melody";
+import { Note } from "../src/domain/music/entities/note/Note";
 
 describe("Melody", () => {
 

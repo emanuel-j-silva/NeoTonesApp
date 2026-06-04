@@ -1,11 +1,11 @@
 import { describe, expect, test, beforeEach } from "vitest";
 
-import { Arrangement } from "../src/domain/music/Arrangement";
-import { Melody } from "../src/domain/music/components/Melody";
-import { Phrase } from "../src/domain/music/components/Phrase";
-import { Note } from "../src/domain/music/note/Note";
-import { ScaleType } from "../src/domain/music/note/ScaleType";
-import { Tone } from "../src/domain/music/note/Tone";
+import { Arrangement } from "../src/domain/music/entities/Arrangement";
+import { Melody } from "../src/domain/music/entities/components/Melody";
+import { Phrase } from "../src/domain/music/entities/components/Phrase";
+import { Note } from "../src/domain/music/entities/note/Note";
+import { ScaleType } from "../src/domain/music/entities/note/ScaleType";
+import { Tone } from "../src/domain/music/entities/note/Tone";
 
 describe("Arrangement", () => {
 

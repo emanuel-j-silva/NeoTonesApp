@@ -1,4 +1,4 @@
-import { Music } from "../Music";
+import { Music } from "../entities/Music";
 import { MusicRepository } from "./MusicRepository";
 
 export class ListMusicsUseCase {
@@ -17,7 +17,7 @@ export class ListMusicsUseCase {
         if (!music) {
             throw new Error("Music not found");
         }
-        
+
         return music;
     }
 

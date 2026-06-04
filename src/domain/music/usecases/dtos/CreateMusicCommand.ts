@@ -1,5 +1,5 @@
-import { MusicComponent } from "../../components/MusicComponent";
-import { Tone } from "../../note/Tone";
+import { MusicComponent } from "../../entities/components/MusicComponent";
+import { Tone } from "../../entities/note/Tone";
 
 export type CreateMusicCommand = {
     title: string;

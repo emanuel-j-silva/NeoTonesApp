@@ -1,4 +1,4 @@
-import { Music } from "../domain/music/Music";
+import { Music } from "../domain/music/entities/Music";
 import { MusicRepository } from "../domain/music/usecases/MusicRepository";
 
 export class InMemoryMusicRepository implements MusicRepository {
