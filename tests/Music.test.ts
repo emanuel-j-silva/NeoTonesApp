@@ -1,3 +1,5 @@
+import * as Crypto from "expo-crypto"
+
 import { describe, expect, test } from "vitest";
 
 import { Arrangement } from "../src/domain/music/entities/Arrangement";
@@ -20,7 +22,7 @@ describe("Music", () => {
 
     const music =
       new Music(
-        crypto.randomUUID(),
+        Crypto.randomUUID(),
         "Amazing Grace",
         arrangement
       );
@@ -51,7 +53,7 @@ describe("Music", () => {
     expect(
       () =>
         new Music(
-          crypto.randomUUID(),
+          Crypto.randomUUID(),
           "" as any,
           arrangement
         )
@@ -63,7 +65,7 @@ describe("Music", () => {
     expect(
       () =>
         new Music(
-          crypto.randomUUID(),
+          Crypto.randomUUID(),
           "Amazing Grace",
           null as any
         )
@@ -73,7 +75,7 @@ describe("Music", () => {
   test("should return true for same id", () => {
 
     const id =
-      crypto.randomUUID();
+      Crypto.randomUUID();
 
     const music1 =
       new Music(
@@ -98,14 +100,14 @@ describe("Music", () => {
 
     const music1 =
       new Music(
-        crypto.randomUUID(),
+        Crypto.randomUUID(),
         "Amazing Grace",
         arrangement
       );
 
     const music2 =
       new Music(
-        crypto.randomUUID(),
+        Crypto.randomUUID(),
         "Amazing Grace",
         arrangement
       );

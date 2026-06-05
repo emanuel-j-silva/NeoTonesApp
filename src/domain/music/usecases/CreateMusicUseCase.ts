@@ -1,3 +1,5 @@
+import * as Crypto from "expo-crypto"
+
 import { Arrangement } from "../entities/Arrangement";
 import { Music } from "../entities/Music";
 import { CreateMusicCommand } from "./dtos/CreateMusicCommand";
@@ -16,7 +18,7 @@ export class CreateMusicUseCase {
             throw new Error("A music with this title already exists");
         }
 
-        const id = crypto.randomUUID()
+        const id = Crypto.randomUUID()
         const arrangement = new Arrangement(command.tone, command.components)
         const music = new Music(id, command.title, arrangement);
 
