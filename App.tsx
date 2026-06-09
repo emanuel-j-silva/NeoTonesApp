@@ -1,20 +1,13 @@
-import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { HomeScreen } from './src/presentation/screens/HomeScreen';
+import { HomeScreen } from './src/presentation/screens/LibraryScreen/LibraryScreen';
+import { ThemeProvider } from './src/shared/theme/ThemeProvider';
 
 export default function App() {
   return (
-    <SafeAreaProvider style={styles.container}>
-      <HomeScreen />
-    </SafeAreaProvider>
+    <ThemeProvider >
+      <SafeAreaProvider >
+        <HomeScreen />
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
