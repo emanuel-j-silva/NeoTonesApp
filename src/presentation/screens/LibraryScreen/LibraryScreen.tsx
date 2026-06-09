@@ -9,9 +9,16 @@ import { Music } from "../../../domain/music/entities/Music";
 import { SongCard } from "../../components/SongCard/SongCard";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 
-import { styles } from "./styles";
+import { useTheme } from "../../../shared/theme/ThemeProvider";
+import { createStyles } from "./styles";
+
+import { Button } from "react-native";
 
 export function HomeScreen() {
+  const { toggleTheme } = useTheme();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
+
   const [musics, setMusics] =
     useState<Music[]>([]);
 
@@ -68,6 +75,10 @@ export function HomeScreen() {
             }}
           />
         )}
+      />
+      <Button
+        title="Trocar tema"
+        onPress={toggleTheme}
       />
     </SafeAreaView>
   );

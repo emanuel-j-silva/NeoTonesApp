@@ -6,5 +6,7 @@ export interface AppTheme {
     secondaryText: string;
     border: string;
     primary: string;
+    iconBackground: string;
+    placeholder: string;
   };
 }

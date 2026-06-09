@@ -1,10 +1,9 @@
-import {
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, Text, View } from "react-native";
 
-import { styles } from "./styles";
+import { useTheme } from "../../../shared/theme/ThemeProvider";
+import { createStyles } from "./styles";
+
+import { Button } from "react-native";
 
 type Props = {
   title: string;
@@ -13,6 +12,9 @@ type Props = {
 };
 
 export function SongCard({title, tone, onPress,}: Props) {
+    const { theme } = useTheme();
+    const styles = createStyles(theme);
+
   return (
     <Pressable
       style={styles.container}
