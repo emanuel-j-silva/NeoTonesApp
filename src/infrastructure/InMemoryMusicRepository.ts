@@ -40,14 +40,14 @@ export class InMemoryMusicRepository implements MusicRepository {
     async findById(id: string): Promise<Music | null> {
 
         return (
-            this.musics.find(music => music.id === id) ?? null
+            this.musics.find(music => music.getId() === id) ?? null
         );
     }
 
     async existsByTitle(title: string): Promise<boolean> {
 
         return this.musics.some(music =>
-            music.title.trim().toLowerCase() === title.trim().toLowerCase()
+            music.getTitle().trim().toLowerCase() === title.trim().toLowerCase()
         );
     }
 
@@ -56,6 +56,6 @@ export class InMemoryMusicRepository implements MusicRepository {
     }
 
     async delete(id: string): Promise<void> {
-        this.musics = this.musics.filter(music => music.id !== id);
+        this.musics = this.musics.filter(music => music.getId() !== id);
     }
 }

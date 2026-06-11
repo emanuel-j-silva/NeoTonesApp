@@ -3,9 +3,9 @@ import { Arrangement } from "./Arrangement";
 export class Music {
 
   constructor(
-    readonly id: string,
-    readonly title: string,
-    readonly arrangement: Arrangement
+    private readonly id: string,
+    private readonly title: string,
+    private readonly arrangement: Arrangement
   ) {
 
     if (!id) {
@@ -21,6 +21,18 @@ export class Music {
         "Arrangement can't be null"
       );
     }
+  }
+
+  getId(): string{
+    return this.id;
+  }
+
+  getTitle(): string{
+    return this.title;
+  }
+
+  getArrangement(): Arrangement{
+    return this.arrangement;
   }
 
   equals(other: Music): boolean {

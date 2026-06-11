@@ -1,11 +1,13 @@
 import { InMemoryMusicRepository } from "../infrastructure/InMemoryMusicRepository";
 import { CreateMusicUseCase } from "../domain/music/usecases/CreateMusicUseCase";
 import { ListMusicsUseCase } from "../domain/music/usecases/ListMusicsUseCase";
+import { ShowArrangementUseCase } from "../domain/music/usecases/ShowArrangementUseCase";
 
 const musicRepository = new InMemoryMusicRepository();
 
 export const dependencies = {
     musicRepository,
     createMusicUseCase: new CreateMusicUseCase(musicRepository),
-    listMusicsUseCase: new ListMusicsUseCase(musicRepository)
+    listMusicsUseCase: new ListMusicsUseCase(musicRepository),
+    ShowArrangementUseCase: new ShowArrangementUseCase(musicRepository)
 };
