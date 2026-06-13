@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import {FlatList,Text, View,} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList }from "../../../navigation/types";
+
 import { dependencies } from "../../../app/dependencies";
 
 import { Music } from "../../../domain/music/entities/Music";
@@ -14,7 +17,16 @@ import { createStyles } from "./styles";
 
 import { Button } from "react-native";
 
-export function HomeScreen() {
+type HomeScreenNavigationProp =
+  NativeStackNavigationProp< RootStackParamList, "Home" >;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
+
+export function HomeScreen({
+  navigation,
+}: Props) {
   const { toggleTheme } = useTheme();
   const { theme } = useTheme();
   const styles = createStyles(theme);
@@ -42,7 +54,7 @@ export function HomeScreen() {
     }
 
     return musics.filter((music) =>
-      music.title
+      music.getTitle()
         .toLowerCase()
         .includes(search.toLowerCase())
     );
@@ -61,18 +73,23 @@ export function HomeScreen() {
 
       <FlatList
         data={filteredMusics}
-        keyExtractor={(music) => music.id}
+        keyExtractor={(music) => music.getId()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <SongCard
-            title={item.title}
-            tone={item.arrangement
+            title={item.getTitle()}
+            tone={item.getArrangement()
               .getTone()
               .getNote()
               .getSymbol()}
-            onPress={() => {
-              console.log(item.title);
-            }}
+            onPress={() =>
+              navigation.navigate(
+                "Arrangement",
+                {
+                  musicId: item.getId(),
+                }
+              )
+            }
           />
         )}
       />

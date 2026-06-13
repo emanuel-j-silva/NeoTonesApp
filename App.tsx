@@ -1,12 +1,12 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { HomeScreen } from './src/presentation/screens/LibraryScreen/LibraryScreen';
 import { ThemeProvider } from './src/shared/theme/ThemeProvider';
+import { AppNavigator } from './src/navigation/AppNavigator';
 
 export default function App() {
   return (
     <ThemeProvider >
       <SafeAreaProvider >
-        <HomeScreen />
+        <AppNavigator />
       </SafeAreaProvider>
     </ThemeProvider>
   );
