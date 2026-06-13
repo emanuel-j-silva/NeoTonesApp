@@ -9,7 +9,20 @@ export class ShowArrangementUseCase{
         private readonly repository: MusicRepository
     ){}
 
-    async execute(id: string, note: Note, scaleType: ScaleType): Promise<ShowArrangementResult>{
+    async showOriginalArrangement(id: string): Promise<ShowArrangementResult> {
+        const music = await this.repository.findById(id);
+        if (!music) {
+            throw new Error("Music not found");
+        }
+
+        return {
+            musicId: music.getId(),
+            title: music.getTitle(),
+            arrangement: music.getArrangement()
+        };
+    }
+
+    async showArrangementInTone(id: string, note: Note, scaleType: ScaleType): Promise<ShowArrangementResult>{
         const music =  await this.repository.findById(id);
         if (!music) {
             throw new Error("Music not found");
