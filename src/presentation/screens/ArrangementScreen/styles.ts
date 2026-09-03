@@ -7,83 +7,110 @@ export const createStyles = (
   StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor:
-        theme.colors.background,
+      backgroundColor: theme.colors.background,
+    },
 
-      paddingHorizontal: 16,
+    /* ─── Header ─── */
+    header: {
+      paddingHorizontal: 20,
+      paddingTop: 8,
+      paddingBottom: 4,
     },
 
     title: {
-      fontSize: 28,
+      fontSize: 26,
       fontWeight: "700",
+      letterSpacing: -0.5,
 
       color: theme.colors.text,
-
-      marginTop: 8,
     },
 
-    subtitle: {
-      fontSize: 16,
-
-      color:
-        theme.colors.secondaryText,
-
-      marginTop: 4,
-      marginBottom: 16,
-    },
-
-    toneSelector: {
-      paddingBottom: 16,
-      gap: 8,
-    },
-
-    toneChip: {
-      paddingHorizontal: 14,
-      paddingVertical: 8,
-
-      borderRadius: 20,
-
-      backgroundColor:
-        theme.colors.iconBackground,
-    },
-
-    selectedToneChip: {
-      backgroundColor:
-        theme.colors.primary,
-    },
-
-    toneChipText: {
-      color: theme.colors.text,
-      fontWeight: "600",
-    },
-
-    selectedToneChipText: {
-      color: "#FFFFFF",
-    },
-
+    /* ─── Content ─── */
     content: {
-      paddingBottom: 32,
+      paddingHorizontal: 20,
+      paddingTop: 12,
+      paddingBottom: 40,
     },
 
-    melody: {
+    /* ─── Melody line ─── */
+    melodyContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: 6,
+
+      marginBottom: 6,
+      paddingVertical: 4,
+    },
+
+    melodyNote: {
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+
+      borderRadius: 6,
+      backgroundColor: theme.colors.primary + "18",
+    },
+
+    melodyNoteText: {
       fontFamily: "monospace",
+      fontSize: 14,
+      fontWeight: "700",
+      letterSpacing: 0.5,
 
-      fontSize: 18,
+      color: theme.colors.primary,
+    },
 
-      color:
-        theme.colors.primary,
+    /* ─── Phrase (section marker / lyrics) ─── */
+    phrase: {
+      fontSize: 16,
+      lineHeight: 24,
 
+      color: theme.colors.text,
+
+      marginTop: 16,
       marginBottom: 8,
     },
 
-    phrase: {
-      fontSize: 22,
+    /* ─── Section marker (INTRO, CLARINETE, etc.) ─── */
+    sectionMarker: {
+      fontSize: 11,
+      fontWeight: "700",
+      letterSpacing: 1.5,
+      textTransform: "uppercase",
 
-      lineHeight: 30,
+      color: theme.colors.secondaryText,
 
-      color:
-        theme.colors.text,
+      marginTop: 24,
+      marginBottom: 8,
 
-      marginBottom: 24,
+      paddingBottom: 6,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: theme.colors.border,
+    },
+
+    /* ─── Annotated Phrase ─── */
+    annotatedPhraseContainer: {
+      marginTop: 16,
+      marginBottom: 8,
+    },
+
+    noteAnnotationLine: {
+      fontFamily: "monospace",
+      fontSize: 13,
+      fontWeight: "700",
+      lineHeight: 18,
+      letterSpacing: 0.3,
+
+      color: theme.colors.primary,
+
+      marginBottom: 2,
+    },
+
+    annotatedPhraseText: {
+      fontFamily: "monospace",
+      fontSize: 13,
+      lineHeight: 20,
+      letterSpacing: 0.3,
+
+      color: theme.colors.text,
     },
   });

@@ -1,5 +1,9 @@
+import { NotePosition } from "../../presentation/models/NotePosition";
+
 export type ArrangementLineViewModel = {
     id: string;
     text: string;
-    type: "phrase" | "melody";
+    type: "phrase" | "section" | "melody" | "annotated-phrase";
+    notes?: string[];
+    notePositions?: NotePosition[];
 };
