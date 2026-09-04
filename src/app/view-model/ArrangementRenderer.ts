@@ -5,6 +5,7 @@ import { Melody } from "../../domain/music/entities/components/Melody";
 import { MusicalPhrase } from "../../domain/music/entities/components/MusicalPhrase";
 import { MusicComponent } from "../../domain/music/entities/components/MusicComponent";
 import { Phrase } from "../../domain/music/entities/components/Phrase";
+import { Section } from "../../domain/music/entities/components/Section";
 import { ArrangementLineViewModel } from "./ArrangementLineViewModel";
 import { ArrangementLayout } from "../../presentation/layout/ArrangementLayoutMap";
 
@@ -32,9 +33,23 @@ export class ArrangementRenderer {
     ): ArrangementLineViewModel[] {
 
         const lines: ArrangementLineViewModel[] = [];
+        const consumedIndexes = new Set<number>();
 
         for (let i = 0; i < components.length; i++) {
+            if (consumedIndexes.has(i)) {
+                continue;
+            }
+
             const component = components[i];
+
+            if (component instanceof Section) {
+                lines.push({
+                    id: Crypto.randomUUID(),
+                    type: "section",
+                    text: component.title,
+                });
+                continue;
+            }
 
             if (component instanceof Phrase) {
                 const phraseLayout = layout.phraseLayouts.find(
@@ -42,9 +57,11 @@ export class ArrangementRenderer {
                 );
 
                 if (phraseLayout) {
-                    const nextMelody = this.findNextMelody(components, i);
+                    const nextMelodyMatch = this.findNextMelodyWithIndex(components, i);
 
-                    if (nextMelody) {
+                    if (nextMelodyMatch) {
+                        const { melody: nextMelody, index: melodyIndex } = nextMelodyMatch;
+
                         const resolvedPositions = phraseLayout.notePositions.map(
                             pos => ({
                                 noteSymbol: nextMelody.notes[pos.noteIndex]?.getSymbol() ?? "?",
@@ -58,15 +75,16 @@ export class ArrangementRenderer {
                             text: component.phrase,
                             notePositions: resolvedPositions,
                         });
+
+                        // Marca a melodia como consumida pela frase para evitar duplicação abaixo da letra
+                        consumedIndexes.add(melodyIndex);
                         continue;
                     }
                 }
 
-                const isSectionHeader = component.phrase === component.phrase.toUpperCase() && component.phrase.length < 25;
-
                 lines.push({
                     id: Crypto.randomUUID(),
-                    type: isSectionHeader ? "section" : "phrase",
+                    type: "phrase",
                     text: component.phrase,
                 });
                 continue;
@@ -79,6 +97,7 @@ export class ArrangementRenderer {
                     type: "melody",
                     text: noteSymbols.join(" "),
                     notes: noteSymbols,
+                    annotation: component.annotation,
                 });
                 continue;
             }
@@ -95,25 +114,35 @@ export class ArrangementRenderer {
         return lines;
     }
 
-    private static findNextMelody(
+    private static findNextMelodyWithIndex(
         components: readonly MusicComponent[],
         currentIndex: number
-    ): Melody | null {
+    ): { melody: Melody; index: number } | null {
 
         for (let j = currentIndex + 1; j < components.length; j++) {
             if (components[j] instanceof Melody) {
-                return components[j] as Melody;
+                return { melody: components[j] as Melody, index: j };
+            }
+            if (components[j] instanceof Section || components[j] instanceof Phrase) {
+                break;
             }
         }
         return null;
     }
 
     private static renderComponent(component: MusicComponent): ArrangementLineViewModel[] {
-        if (component instanceof Phrase) {
-            const isSectionHeader = component.phrase === component.phrase.toUpperCase() && component.phrase.length < 25;
+        if (component instanceof Section) {
             return [{
                 id: Crypto.randomUUID(),
-                type: isSectionHeader ? "section" : "phrase",
+                type: "section",
+                text: component.title
+            }];
+        }
+
+        if (component instanceof Phrase) {
+            return [{
+                id: Crypto.randomUUID(),
+                type: "phrase",
                 text: component.phrase
             }];
         }
@@ -125,6 +154,7 @@ export class ArrangementRenderer {
                 type: "melody",
                 text: noteSymbols.join(" "),
                 notes: noteSymbols,
+                annotation: component.annotation,
             }];
         }
 

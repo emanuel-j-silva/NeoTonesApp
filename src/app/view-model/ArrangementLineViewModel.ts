@@ -5,5 +5,6 @@ export type ArrangementLineViewModel = {
     text: string;
     type: "phrase" | "section" | "melody" | "annotated-phrase";
     notes?: string[];
+    annotation?: string;
     notePositions?: NotePosition[];
 };

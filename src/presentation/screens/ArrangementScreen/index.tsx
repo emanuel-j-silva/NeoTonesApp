@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { FlatList, Text, View, Pressable } from "react-native";
+import { FlatList, Text, View, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { RouteProp } from "@react-navigation/native";
@@ -111,38 +111,61 @@ export function ArrangementScreen({
   }
 
   function renderLine(item: ArrangementLineViewModel) {
+    if (item.type === "section") {
+      return (
+        <View style={styles.sectionContainer}>
+          <View style={styles.sectionMarkerRow}>
+            <View style={styles.sectionBadge}>
+              <Text style={styles.sectionMarkerText}>
+                {item.text}
+              </Text>
+            </View>
+            <View style={styles.sectionDividerLine} />
+          </View>
+        </View>
+      );
+    }
+
     if (item.type === "annotated-phrase" && item.notePositions) {
       const annotationText = buildAnnotationLine(item.notePositions);
 
       return (
-        <View style={styles.annotatedPhraseContainer}>
-          <Text style={styles.noteAnnotationLine}>
-            {annotationText}
-          </Text>
-          <Text style={styles.annotatedPhraseText}>
-            {item.text}
-          </Text>
-        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.annotatedPhraseScroll}
+        >
+          <View style={styles.annotatedPhraseContainer}>
+            <Text style={styles.noteAnnotationLine}>
+              {annotationText}
+            </Text>
+            <Text style={styles.annotatedPhraseText}>
+              {item.text}
+            </Text>
+          </View>
+        </ScrollView>
       );
     }
 
     if (item.type === "melody") {
+      const notesList = item.notes || item.text.split(" ");
       return (
-        <View style={styles.melodyContainer}>
-          {(item.notes || item.text.split(" ")).map((noteSymbol, idx) => (
-            <View key={idx} style={styles.melodyNote}>
-              <Text style={styles.melodyNoteText}>{noteSymbol}</Text>
+        <View style={styles.melodyRow}>
+          <View style={styles.melodyContainer}>
+            {notesList.map((noteSymbol, idx) => (
+              <View key={idx} style={styles.melodyNote}>
+                <Text style={styles.melodyNoteText}>{noteSymbol}</Text>
+              </View>
+            ))}
+          </View>
+          {item.annotation ? (
+            <View style={styles.annotationBadge}>
+              <Text style={styles.annotationBadgeText}>
+                {item.annotation}
+              </Text>
             </View>
-          ))}
+          ) : null}
         </View>
-      );
-    }
-
-    if (item.type === "section") {
-      return (
-        <Text style={styles.sectionMarker}>
-          {item.text}
-        </Text>
       );
     }
 
