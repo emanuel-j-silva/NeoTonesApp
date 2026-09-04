@@ -64,39 +64,18 @@ export const createStyles = (
       backgroundColor: theme.colors.border,
     },
 
-    /* ─── Standalone Melody Row & Pills (Passagens/Solo/Intro) ─── */
+    /* ─── Standalone Melody (Notas soltas sem caixa/borda - design unificado) ─── */
     melodyRow: {
       flexDirection: "row",
       alignItems: "center",
       flexWrap: "wrap",
       gap: 8,
-      marginVertical: 4,
+      marginVertical: 6,
     },
 
-    melodyContainer: {
-      flexDirection: "row",
-      flexWrap: "wrap",
-      gap: 6,
-      paddingVertical: 2,
-    },
-
-    melodyNote: {
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-      borderRadius: 6,
-      backgroundColor: theme.colors.surface,
-      borderWidth: 1,
-      borderColor: theme.colors.primary + "35",
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.05,
-      shadowRadius: 2,
-      elevation: 1,
-    },
-
-    melodyNoteText: {
+    melodyText: {
       fontFamily: "monospace",
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: "700",
       letterSpacing: 0.5,
       color: theme.colors.primary,
@@ -127,12 +106,8 @@ export const createStyles = (
     },
 
     /* ─── Annotated Phrase (Notes positioning over lyrics) ─── */
-    annotatedPhraseScroll: {
-      marginVertical: 8,
-    },
-
     annotatedPhraseContainer: {
-      paddingVertical: 2,
+      marginVertical: 8,
     },
 
     noteAnnotationLine: {

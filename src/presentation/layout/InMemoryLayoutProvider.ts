@@ -2,7 +2,8 @@ import { ArrangementLayout } from "./ArrangementLayoutMap";
 import { LayoutProvider } from "./LayoutProvider";
 
 /**
- * Provider de layout em memória com dados mockados.
+ * Provider de layout em memória com posições de notas originais
+ * gravadas em relação à frase da música.
  */
 export class InMemoryLayoutProvider implements LayoutProvider {
 

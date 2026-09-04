@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { FlatList, Text, View, ScrollView } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { RouteProp } from "@react-navigation/native";
@@ -30,6 +30,11 @@ type Props = {
 
 const layoutProvider = new InMemoryLayoutProvider();
 
+/**
+ * Constrói a linha de anotação de notas com o posicionamento relativo
+ * à frase. Se alguma nota atingir o limite físico da tela, o componente
+ * Text nativo fará a quebra natural apenas para a nota excedente.
+ */
 function buildAnnotationLine(notePositions: NotePosition[]): string {
   const sorted = [...notePositions].sort(
     (a, b) => a.charIndex - b.charIndex
@@ -38,7 +43,11 @@ function buildAnnotationLine(notePositions: NotePosition[]): string {
   let line = "";
 
   for (const pos of sorted) {
-    while (line.length < pos.charIndex) {
+    if (line.length < pos.charIndex) {
+      while (line.length < pos.charIndex) {
+        line += " ";
+      }
+    } else if (line.length > 0) {
       line += " ";
     }
     line += pos.noteSymbol;
@@ -130,34 +139,21 @@ export function ArrangementScreen({
       const annotationText = buildAnnotationLine(item.notePositions);
 
       return (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.annotatedPhraseScroll}
-        >
-          <View style={styles.annotatedPhraseContainer}>
-            <Text style={styles.noteAnnotationLine}>
-              {annotationText}
-            </Text>
-            <Text style={styles.annotatedPhraseText}>
-              {item.text}
-            </Text>
-          </View>
-        </ScrollView>
+        <View style={styles.annotatedPhraseContainer}>
+          <Text style={styles.noteAnnotationLine}>
+            {annotationText}
+          </Text>
+          <Text style={styles.annotatedPhraseText}>
+            {item.text}
+          </Text>
+        </View>
       );
     }
 
     if (item.type === "melody") {
-      const notesList = item.notes || item.text.split(" ");
       return (
         <View style={styles.melodyRow}>
-          <View style={styles.melodyContainer}>
-            {notesList.map((noteSymbol, idx) => (
-              <View key={idx} style={styles.melodyNote}>
-                <Text style={styles.melodyNoteText}>{noteSymbol}</Text>
-              </View>
-            ))}
-          </View>
+          <Text style={styles.melodyText}>{item.text}</Text>
           {item.annotation ? (
             <View style={styles.annotationBadge}>
               <Text style={styles.annotationBadgeText}>
