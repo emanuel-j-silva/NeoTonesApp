@@ -17,4 +17,17 @@ describe("ArrangementTextTransposer", () => {
     expect(transposed).toContain("[C]");
     expect(transposed).toContain("Um [C#] grande sinal");
   });
+
+  test("should transpose Portuguese solfege notes correctly", () => {
+    const text = "[INTRO]\n[Fa#] [Si] [La#]\nUm [Si] grande sinal";
+    const fromTone = new Tone(Note.A, ScaleType.MINOR);
+    const toTone = new Tone(Note.B, ScaleType.MINOR);
+
+    const transposed = ArrangementTextTransposer.transpose(text, fromTone, toTone);
+
+    expect(transposed).toContain("[Sol#]");
+    expect(transposed).toContain("[Do#]");
+    expect(transposed).toContain("[Do]");
+    expect(transposed).toContain("Um [Do#] grande sinal");
+  });
 });

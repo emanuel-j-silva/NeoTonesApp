@@ -1,17 +1,17 @@
 import { MusicComponent } from "./components/MusicComponent";
 import { Tone } from "./note/Tone";
-import { ArrangementBlock } from "./ArrangementBlock";
+import { ArrangementTextTransposer } from "../usecases/ArrangementTextTransposer";
 
 export class Arrangement {
 
   readonly tone: Tone;
   readonly components: readonly MusicComponent[];
-  readonly blocks: readonly ArrangementBlock[];
+  readonly textContent: string;
 
   constructor(
     tone: Tone,
     components: readonly MusicComponent[] = [],
-    blocks: readonly ArrangementBlock[] = []
+    textContent: string = ""
   ) {
 
     if (!tone) {
@@ -22,63 +22,57 @@ export class Arrangement {
       throw new Error("Components can't be null");
     }
 
-    if (!blocks) {
-      throw new Error("Blocks can't be null");
-    }
-
     if (components.some(component => component == null)) {
       throw new Error("Components can't contain null values");
     }
 
-    if (blocks.some(block => block == null)) {
-      throw new Error("Blocks can't contain null values");
+    if (textContent == null) {
+      throw new Error("Text content can't be null");
     }
 
     this.tone = tone;
     this.components = Object.freeze([...components]);
-    this.blocks = Object.freeze([...blocks]);
+    this.textContent = textContent;
   }
 
-  static empty(tone: Tone, blocks: readonly ArrangementBlock[] = []): Arrangement {
-    return new Arrangement(tone, [], blocks);
+  static empty(tone: Tone, textContent: string = ""): Arrangement {
+    return new Arrangement(tone, [], textContent);
   }
 
   transposeTo(pretendedTone: Tone): Arrangement {
-    const transposedBlocks = this.blocks.map(block => block.transpose(this.tone, pretendedTone));
-    return new Arrangement(pretendedTone, [...this.components], transposedBlocks);
+    if (this.textContent) {
+      const transposedText = ArrangementTextTransposer.transpose(
+        this.textContent,
+        this.tone,
+        pretendedTone
+      );
+      return new Arrangement(pretendedTone, [...this.components], transposedText);
+    }
+
+    const semitones = pretendedTone.getNote().getOrdinal() - this.tone.getNote().getOrdinal();
+
+    return new Arrangement(pretendedTone, this.components
+        .map(component =>
+            component.shiftTone(semitones)
+        ), this.textContent);
   }
 
   equals(other: Arrangement): boolean {
-
-    if (!other) {
-      return false;
-    }
-
-    if (!this.tone.equals(other.tone)) {
-      return false;
-    }
-
-    if (this.blocks.length !== other.blocks.length) {
-      return false;
-    }
-
-    return this.blocks.every(
-      (block, index) =>
-        block.equals(
-          other.blocks[index]
-        )
-    );
+    if (!other) return false;
+    if (!this.tone.equals(other.tone)) return false;
+    if (this.textContent !== other.textContent) return false;
+    return true;
   }
 
   getTone(): Tone {
     return this.tone;
   }
 
-  getBlocks(): readonly ArrangementBlock[] {
-    return this.blocks;
+  getTextContent(): string {
+    return this.textContent;
   }
 
   toString(): string {
-    return `Arrangement(${this.tone.toString()}, ${this.blocks.length} blocks)`;
+    return `Arrangement(${this.tone.toString()}, text length: ${this.textContent.length})`;
   }
 }

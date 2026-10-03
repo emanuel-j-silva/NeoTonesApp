@@ -1,7 +1,6 @@
 import * as Crypto from "expo-crypto";
 
 import { Arrangement } from "../../domain/music/entities/Arrangement";
-import { ArrangementBlock } from "../../domain/music/entities/ArrangementBlock";
 import { Music } from "../../domain/music/entities/Music";
 import { Note } from "../../domain/music/entities/note/Note";
 import { ScaleType } from "../../domain/music/entities/note/ScaleType";
@@ -19,15 +18,7 @@ export class InMemoryMusicRepository implements MusicRepository {
                     ScaleType.MINOR
                 ),
                 [],
-                [
-                    new ArrangementBlock("1", "section", "INTRO"),
-                    new ArrangementBlock("2", "notes", "Am Dm E7 Am"),
-                    new ArrangementBlock("3", "section", "VERSO 1"),
-                    new ArrangementBlock("4", "lyrics", "O Senhor é o pastor que me conduz,"),
-                    new ArrangementBlock("5", "notes", "Am Dm"),
-                    new ArrangementBlock("6", "lyrics", "Não me falta coisa alguma."),
-                    new ArrangementBlock("7", "notes", "G7 C"),
-                ]
+                "[INTRO]\n[La] [Re] [Mi7] [La]\n\n[VERSO 1]\nO [La] Senhor é o pastor [Re] que me conduz,\nNão [Sol] me falta [Do] coisa alguma.\n[Fa] Em prados e [Re] verdes matas\n[Mi7] Ele me faz repousar."
             )
         ),
 
@@ -40,13 +31,7 @@ export class InMemoryMusicRepository implements MusicRepository {
                     ScaleType.MAJOR
                 ),
                 [],
-                [
-                    new ArrangementBlock("1", "section", "INTRO"),
-                    new ArrangementBlock("2", "notes", "E A B7 E"),
-                    new ArrangementBlock("3", "section", "REFRÃO"),
-                    new ArrangementBlock("4", "lyrics", "A minha alma engrandece ao Senhor,"),
-                    new ArrangementBlock("5", "notes", "E A"),
-                ]
+                "[INTRO]\n[Mi] [La] [Si7] [Mi]\n\n[REFRÃO]\nA minha [Mi] alma engrandece ao [La] Senhor,\nE o meu [Si7] espírito exulta em Deus, meu [Mi] Salvador."
             )
         ),
 
@@ -59,15 +44,7 @@ export class InMemoryMusicRepository implements MusicRepository {
                     ScaleType.MINOR
                 ),
                 [],
-                [
-                    new ArrangementBlock("1", "section", "INTRO"),
-                    new ArrangementBlock("2", "notes", "F# B A# A G# G F#"),
-                    new ArrangementBlock("3", "section", "REFRÃO"),
-                    new ArrangementBlock("4", "lyrics", "Um Grande sinal…"),
-                    new ArrangementBlock("5", "notes", "B C# D"),
-                    new ArrangementBlock("6", "lyrics", "Uma mulher vestida de sol"),
-                    new ArrangementBlock("7", "notes", "B D C# B D C# B"),
-                ]
+                "[INTRO]\n[Fa#] [Si] [La#] [La] [Sol#] [Sol] [Fa#] (X2)\n[Fa#] [Sol] [Fa#] [Fa] [Fa] [Fa#]\n[Fa#] [Si] [Re] [Si] [La#] [Si]\n\n[REFRÃO]\nUm [Si] Grande [Do#] sinal…\nUma [La] mulher [Do#] [Mi] [La] [Mi] [Do#]\nUma [Si] mulher [Re] vestida [Do#] de [Si] sol\nTendo [Si] a lua [Re] sob [Do#] os [Si] pés\nE uma coroa de doze estrelas\nEstá [Si] gravida [Re] e [Do#] grita [Si]\nCom tormentos, para dar a luz"
             )
         )
     ];

@@ -16,114 +16,110 @@ export const createStyles = (theme: AppTheme) =>
       alignItems: "center",
     },
     title: {
-      fontSize: 26,
+      fontSize: 24,
       fontWeight: "700",
       letterSpacing: -0.5,
       color: theme.colors.text,
+      flex: 1,
     },
-    saveButton: {
-      paddingHorizontal: 16,
-      paddingVertical: 8,
+    headerActions: {
+      flexDirection: "row",
+      gap: 8,
+      alignItems: "center",
+    },
+    modeButton: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
       borderRadius: 8,
       backgroundColor: theme.colors.primary,
     },
-    saveButtonText: {
+    modeButtonText: {
       color: "#FFFFFF",
       fontWeight: "700",
-      fontSize: 14,
+      fontSize: 13,
+    },
+    cancelButton: {
+      paddingHorizontal: 12,
+      paddingVertical: 7,
+      borderRadius: 8,
+      backgroundColor: theme.colors.iconBackground,
+    },
+    cancelButtonText: {
+      color: theme.colors.secondaryText,
+      fontWeight: "600",
+      fontSize: 13,
     },
     content: {
       paddingHorizontal: 20,
-      paddingTop: 12,
-      paddingBottom: 40,
+      paddingTop: 16,
+      paddingBottom: 60,
+      flexGrow: 1,
     },
-    blockCard: {
+    notepadInput: {
+      fontFamily: "monospace",
+      fontSize: 16,
+      lineHeight: 28,
+      color: theme.colors.text,
       backgroundColor: theme.colors.surface,
       borderRadius: 12,
-      padding: 12,
-      marginBottom: 12,
+      padding: 16,
+      minHeight: 450,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
-    noteCard: {
-      borderColor: theme.colors.primary + "60",
-      backgroundColor: theme.colors.primary + "08",
+    chartContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      padding: 16,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
-    sectionCard: {
-      backgroundColor: theme.colors.iconBackground,
+    chartLine: {
+      fontFamily: "monospace",
+      fontSize: 16,
+      lineHeight: 30,
+      color: theme.colors.text,
+      marginBottom: 6,
     },
-    blockHeaderRow: {
+    inlineChord: {
+      fontFamily: "monospace",
+      fontSize: 16,
+      fontWeight: "700",
+      color: theme.colors.primary,
+      backgroundColor: theme.colors.primary + "15",
+      paddingHorizontal: 4,
+      borderRadius: 4,
+    },
+    chartLyric: {
+      fontFamily: "monospace",
+      fontSize: 16,
+      color: theme.colors.text,
+    },
+    sectionContainer: {
+      marginTop: 18,
+      marginBottom: 10,
+    },
+    sectionMarkerRow: {
       flexDirection: "row",
-      justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: 8,
+      gap: 10,
     },
-    typeSelectorRow: {
-      flexDirection: "row",
-      gap: 6,
-    },
-    typeButton: {
+    sectionBadge: {
       paddingHorizontal: 10,
       paddingVertical: 4,
       borderRadius: 6,
-      backgroundColor: theme.colors.iconBackground,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.primary + "20",
     },
-    typeButtonActive: {
-      backgroundColor: theme.colors.primary,
-      borderColor: theme.colors.primary,
-    },
-    typeButtonText: {
+    sectionMarkerText: {
       fontSize: 12,
-      fontWeight: "600",
-      color: theme.colors.secondaryText,
-    },
-    typeButtonTextActive: {
-      color: "#FFFFFF",
-    },
-    deleteButton: {
-      padding: 4,
-    },
-    deleteButtonText: {
-      fontSize: 16,
-      color: theme.colors.secondaryText,
-      fontWeight: "700",
-    },
-    blockInput: {
-      fontSize: 16,
-      color: theme.colors.text,
-      minHeight: 40,
-      paddingTop: 4,
-    },
-    noteInput: {
-      fontFamily: "monospace",
-      fontWeight: "700",
-      color: theme.colors.primary,
-    },
-    sectionInput: {
-      fontFamily: "monospace",
       fontWeight: "800",
-      textTransform: "uppercase",
       letterSpacing: 1.5,
+      textTransform: "uppercase",
       color: theme.colors.primary,
     },
-    footerActions: {
-      gap: 10,
-      marginTop: 10,
-    },
-    addButton: {
-      padding: 14,
-      borderRadius: 10,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      borderStyle: "dashed",
-      alignItems: "center",
-      backgroundColor: theme.colors.surface,
-    },
-    addButtonText: {
-      fontSize: 14,
-      fontWeight: "600",
-      color: theme.colors.primary,
+    sectionDividerLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: theme.colors.border,
     },
   });
