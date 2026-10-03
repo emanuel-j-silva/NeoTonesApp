@@ -1,9 +1,9 @@
-import { InMemoryMusicRepository } from "../data/repositories/InMemoryMusicRepository";
+import { SQLiteMusicRepository } from "../data/repositories/SQLiteMusicRepository";
 import { CreateMusicUseCase } from "../domain/music/usecases/CreateMusicUseCase";
 import { ListMusicsUseCase } from "../domain/music/usecases/ListMusicsUseCase";
 import { ShowArrangementUseCase } from "../domain/music/usecases/ShowArrangementUseCase";
 
-const musicRepository = new InMemoryMusicRepository();
+const musicRepository = new SQLiteMusicRepository();
 
 export const dependencies = {
     musicRepository,

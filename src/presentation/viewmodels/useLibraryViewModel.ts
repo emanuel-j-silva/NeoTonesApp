@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Music } from "../../domain/music/entities/Music";
 import { dependencies } from "../../app/dependencies";
+import { Tone } from "../../domain/music/entities/note/Tone";
+import { Note } from "../../domain/music/entities/note/Note";
+import { ScaleType } from "../../domain/music/entities/note/ScaleType";
 
 export function useLibraryViewModel() {
   const [musics, setMusics] = useState<Music[]>([]);
@@ -21,6 +24,22 @@ export function useLibraryViewModel() {
     }
   }
 
+  async function createNewMusic(title: string): Promise<string> {
+    setIsLoading(true);
+    try {
+      const command = {
+        title: title.trim() || "Nova Música",
+        tone: new Tone(Note.C, ScaleType.MAJOR),
+        components: [],
+      };
+      const newMusic = await dependencies.createMusicUseCase.execute(command);
+      await loadMusics();
+      return newMusic.getId();
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const filteredMusics = useMemo(() => {
     if (!search.trim()) {
       return musics;
@@ -36,6 +55,7 @@ export function useLibraryViewModel() {
     search,
     setSearch,
     isLoading,
+    createNewMusic,
     refresh: loadMusics,
   };
 }
