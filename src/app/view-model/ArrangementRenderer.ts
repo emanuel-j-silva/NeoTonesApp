@@ -76,7 +76,6 @@ export class ArrangementRenderer {
                             notePositions: resolvedPositions,
                         });
 
-                        // Marca a melodia como consumida pela frase para evitar duplicação abaixo da letra
                         consumedIndexes.add(melodyIndex);
                         continue;
                     }

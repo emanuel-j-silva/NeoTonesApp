@@ -1,24 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
-import {FlatList,Text, View,} from "react-native";
+import { FlatList, Text, View, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList }from "../../../navigation/types";
-
-import { dependencies } from "../../../app/dependencies";
-
-import { Music } from "../../../domain/music/entities/Music";
+import { RootStackParamList } from "../../../navigation/types";
 
 import { SongCard } from "../../components/SongCard/SongCard";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { useLibraryViewModel } from "../../viewmodels/useLibraryViewModel";
 
 import { useTheme } from "../../../shared/theme/ThemeProvider";
 import { createStyles } from "./styles";
 
-import { Button } from "react-native";
-
 type HomeScreenNavigationProp =
-  NativeStackNavigationProp< RootStackParamList, "Home" >;
+  NativeStackNavigationProp<RootStackParamList, "Home">;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
@@ -31,34 +25,7 @@ export function HomeScreen({
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
-  const [musics, setMusics] =
-    useState<Music[]>([]);
-
-  const [search, setSearch] =
-    useState("");
-
-  useEffect(() => {
-    loadMusics();
-  }, []);
-
-  async function loadMusics() {
-    const result =
-      await dependencies.listMusicsUseCase.findAll();
-
-    setMusics(result);
-  }
-
-  const filteredMusics = useMemo(() => {
-    if (!search.trim()) {
-      return musics;
-    }
-
-    return musics.filter((music) =>
-      music.getTitle()
-        .toLowerCase()
-        .includes(search.toLowerCase())
-    );
-  }, [musics, search]);
+  const { musics, search, setSearch } = useLibraryViewModel();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +39,7 @@ export function HomeScreen({
       />
 
       <FlatList
-        data={filteredMusics}
+        data={musics}
         keyExtractor={(music) => music.getId()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (

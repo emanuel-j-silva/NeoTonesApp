@@ -1,4 +1,4 @@
-import { InMemoryMusicRepository } from "../infrastructure/InMemoryMusicRepository";
+import { InMemoryMusicRepository } from "../data/repositories/InMemoryMusicRepository";
 import { CreateMusicUseCase } from "../domain/music/usecases/CreateMusicUseCase";
 import { ListMusicsUseCase } from "../domain/music/usecases/ListMusicsUseCase";
 import { ShowArrangementUseCase } from "../domain/music/usecases/ShowArrangementUseCase";

@@ -64,7 +64,7 @@ export const createStyles = (
       backgroundColor: theme.colors.border,
     },
 
-    /* ─── Standalone Melody (Notas soltas sem caixa/borda - design unificado) ─── */
+    /* ─── Standalone Melody ─── */
     melodyRow: {
       flexDirection: "row",
       alignItems: "center",
@@ -81,7 +81,7 @@ export const createStyles = (
       color: theme.colors.primary,
     },
 
-    /* ─── Melody Annotation Badge (e.g. (X2), (ao final)) ─── */
+    /* ─── Melody Annotation Badge ─── */
     annotationBadge: {
       paddingHorizontal: 8,
       paddingVertical: 3,
@@ -97,7 +97,7 @@ export const createStyles = (
       color: theme.colors.secondaryText,
     },
 
-    /* ─── Plain Phrase (lyrics without melody) ─── */
+    /* ─── Plain Phrase ─── */
     phrase: {
       fontSize: 16,
       lineHeight: 24,
@@ -105,7 +105,7 @@ export const createStyles = (
       marginVertical: 6,
     },
 
-    /* ─── Annotated Phrase (Notes positioning over lyrics) ─── */
+    /* ─── Annotated Phrase ─── */
     annotatedPhraseContainer: {
       marginVertical: 8,
     },
