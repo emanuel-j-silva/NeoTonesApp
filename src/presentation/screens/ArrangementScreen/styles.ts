@@ -1,131 +1,129 @@
 import { StyleSheet } from "react-native";
 import { AppTheme } from "../../../shared/theme/AppTheme";
 
-export const createStyles = (
-  theme: AppTheme
-) =>
+export const createStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
-
-    /* ─── Header ─── */
     header: {
       paddingHorizontal: 20,
       paddingTop: 8,
       paddingBottom: 4,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
-
     title: {
       fontSize: 26,
       fontWeight: "700",
       letterSpacing: -0.5,
       color: theme.colors.text,
     },
-
-    /* ─── Content ─── */
+    saveButton: {
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 8,
+      backgroundColor: theme.colors.primary,
+    },
+    saveButtonText: {
+      color: "#FFFFFF",
+      fontWeight: "700",
+      fontSize: 14,
+    },
     content: {
       paddingHorizontal: 20,
-      paddingTop: 8,
+      paddingTop: 12,
       paddingBottom: 40,
     },
-
-    /* ─── Section Header / Separator ─── */
-    sectionContainer: {
-      marginTop: 24,
+    blockCard: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: 12,
+      padding: 12,
       marginBottom: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
     },
-
-    sectionMarkerRow: {
+    noteCard: {
+      borderColor: theme.colors.primary + "60",
+      backgroundColor: theme.colors.primary + "08",
+    },
+    sectionCard: {
+      backgroundColor: theme.colors.iconBackground,
+    },
+    blockHeaderRow: {
       flexDirection: "row",
+      justifyContent: "space-between",
       alignItems: "center",
-      gap: 10,
+      marginBottom: 8,
     },
-
-    sectionBadge: {
+    typeSelectorRow: {
+      flexDirection: "row",
+      gap: 6,
+    },
+    typeButton: {
       paddingHorizontal: 10,
       paddingVertical: 4,
-      borderRadius: 8,
-      backgroundColor: theme.colors.primary + "20",
-    },
-
-    sectionMarkerText: {
-      fontSize: 12,
-      fontWeight: "800",
-      letterSpacing: 1.5,
-      textTransform: "uppercase",
-      color: theme.colors.primary,
-    },
-
-    sectionDividerLine: {
-      flex: 1,
-      height: 1,
-      backgroundColor: theme.colors.border,
-    },
-
-    /* ─── Standalone Melody ─── */
-    melodyRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      flexWrap: "wrap",
-      gap: 8,
-      marginVertical: 6,
-    },
-
-    melodyText: {
-      fontFamily: "monospace",
-      fontSize: 16,
-      fontWeight: "700",
-      letterSpacing: 0.5,
-      color: theme.colors.primary,
-    },
-
-    /* ─── Melody Annotation Badge ─── */
-    annotationBadge: {
-      paddingHorizontal: 8,
-      paddingVertical: 3,
       borderRadius: 6,
       backgroundColor: theme.colors.iconBackground,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
-
-    annotationBadgeText: {
+    typeButtonActive: {
+      backgroundColor: theme.colors.primary,
+      borderColor: theme.colors.primary,
+    },
+    typeButtonText: {
       fontSize: 12,
       fontWeight: "600",
       color: theme.colors.secondaryText,
     },
-
-    /* ─── Plain Phrase ─── */
-    phrase: {
+    typeButtonTextActive: {
+      color: "#FFFFFF",
+    },
+    deleteButton: {
+      padding: 4,
+    },
+    deleteButtonText: {
       fontSize: 16,
-      lineHeight: 24,
-      color: theme.colors.text,
-      marginVertical: 6,
-    },
-
-    /* ─── Annotated Phrase ─── */
-    annotatedPhraseContainer: {
-      marginVertical: 8,
-    },
-
-    noteAnnotationLine: {
-      fontFamily: "monospace",
-      fontSize: 13,
+      color: theme.colors.secondaryText,
       fontWeight: "700",
-      lineHeight: 18,
-      letterSpacing: 0.5,
-      color: theme.colors.primary,
-      marginBottom: 2,
     },
-
-    annotatedPhraseText: {
-      fontFamily: "monospace",
+    blockInput: {
       fontSize: 16,
-      fontWeight: "500",
-      lineHeight: 24,
-      letterSpacing: 0.5,
       color: theme.colors.text,
+      minHeight: 40,
+      paddingTop: 4,
+    },
+    noteInput: {
+      fontFamily: "monospace",
+      fontWeight: "700",
+      color: theme.colors.primary,
+    },
+    sectionInput: {
+      fontFamily: "monospace",
+      fontWeight: "800",
+      textTransform: "uppercase",
+      letterSpacing: 1.5,
+      color: theme.colors.primary,
+    },
+    footerActions: {
+      gap: 10,
+      marginTop: 10,
+    },
+    addButton: {
+      padding: 14,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: theme.colors.border,
+      borderStyle: "dashed",
+      alignItems: "center",
+      backgroundColor: theme.colors.surface,
+    },
+    addButtonText: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: theme.colors.primary,
     },
   });

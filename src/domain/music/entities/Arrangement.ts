@@ -1,14 +1,17 @@
 import { MusicComponent } from "./components/MusicComponent";
 import { Tone } from "./note/Tone";
+import { ArrangementBlock } from "./ArrangementBlock";
 
 export class Arrangement {
 
   readonly tone: Tone;
   readonly components: readonly MusicComponent[];
+  readonly blocks: readonly ArrangementBlock[];
 
   constructor(
     tone: Tone,
-    components: readonly MusicComponent[] = []
+    components: readonly MusicComponent[] = [],
+    blocks: readonly ArrangementBlock[] = []
   ) {
 
     if (!tone) {
@@ -19,86 +22,30 @@ export class Arrangement {
       throw new Error("Components can't be null");
     }
 
+    if (!blocks) {
+      throw new Error("Blocks can't be null");
+    }
+
     if (components.some(component => component == null)) {
       throw new Error("Components can't contain null values");
     }
 
+    if (blocks.some(block => block == null)) {
+      throw new Error("Blocks can't contain null values");
+    }
+
     this.tone = tone;
     this.components = Object.freeze([...components]);
+    this.blocks = Object.freeze([...blocks]);
   }
 
-  static empty(tone: Tone): Arrangement {
-    return new Arrangement(tone);
-  }
-
-  withAddedComponent(
-    component: MusicComponent
-  ): Arrangement {
-
-    if (!component) {
-      throw new Error(
-        "Can't add null components in arrangement"
-      );
-    }
-
-    return new Arrangement(
-      this.tone,
-      [...this.components, component]
-    );
-  }
-
-  withAddedComponents(
-    components: readonly MusicComponent[]
-  ): Arrangement {
-
-    if (!components) {
-      throw new Error(
-        "Can't add null components in arrangement"
-      );
-    }
-
-    if (components.some(component => component == null)) {
-      throw new Error(
-        "Can't add null components in arrangement"
-      );
-    }
-
-    return new Arrangement(
-      this.tone,
-      [...this.components, ...components]
-    );
-  }
-
-  withoutComponentAt(
-    index: number
-  ): Arrangement {
-
-    if (
-      index < 0 ||
-      index >= this.components.length
-    ) {
-      throw new Error(
-        "Component not found with this index"
-      );
-    }
-
-    return new Arrangement(
-      this.tone,
-      this.components.filter(
-        (_, i) => i !== index
-      )
-    );
+  static empty(tone: Tone, blocks: readonly ArrangementBlock[] = []): Arrangement {
+    return new Arrangement(tone, [], blocks);
   }
 
   transposeTo(pretendedTone: Tone): Arrangement {
-
-    const semitones = pretendedTone.getNote().getOrdinal() - this.tone.getNote().getOrdinal();
-
-    return new Arrangement(pretendedTone, this.components
-        .map(component =>
-            component.shiftTone(semitones)
-        )
-    );
+    const transposedBlocks = this.blocks.map(block => block.transpose(this.tone, pretendedTone));
+    return new Arrangement(pretendedTone, [...this.components], transposedBlocks);
   }
 
   equals(other: Arrangement): boolean {
@@ -111,26 +58,27 @@ export class Arrangement {
       return false;
     }
 
-    if (
-      this.components.length !==
-      other.components.length
-    ) {
+    if (this.blocks.length !== other.blocks.length) {
       return false;
     }
 
-    return this.components.every(
-      (component, index) =>
-        component.equals(
-          other.components[index]
+    return this.blocks.every(
+      (block, index) =>
+        block.equals(
+          other.blocks[index]
         )
     );
   }
 
   getTone(): Tone {
-    return this.tone
+    return this.tone;
+  }
+
+  getBlocks(): readonly ArrangementBlock[] {
+    return this.blocks;
   }
 
   toString(): string {
-    return `Arrangement(${this.tone.toString()}, ${this.components.length} components)`;
+    return `Arrangement(${this.tone.toString()}, ${this.blocks.length} blocks)`;
   }
 }
