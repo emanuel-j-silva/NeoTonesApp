@@ -30,4 +30,29 @@ describe("ArrangementTextTransposer", () => {
     expect(transposed).toContain("[Do]");
     expect(transposed).toContain("Um [Do#] grande sinal");
   });
+
+  test("should transpose slash (/) notation chords correctly", () => {
+    const text = "[INTRO]\n/Fa# /Si /La#\nUm /Si grande sinal";
+    const fromTone = new Tone(Note.A, ScaleType.MINOR);
+    const toTone = new Tone(Note.B, ScaleType.MINOR);
+
+    const transposed = ArrangementTextTransposer.transpose(text, fromTone, toTone);
+
+    expect(transposed).toContain("/Sol#");
+    expect(transposed).toContain("/Do#");
+    expect(transposed).toContain("/Do");
+    expect(transposed).toContain("Um /Do# grande sinal");
+  });
+
+  test("should transpose flat notes (Sib, Bb) correctly", () => {
+    const text = "/Sib /Bb /Reb";
+    const fromTone = new Tone(Note.C, ScaleType.MAJOR);
+    const toTone = new Tone(Note.D, ScaleType.MAJOR);
+
+    const transposed = ArrangementTextTransposer.transpose(text, fromTone, toTone);
+
+    expect(transposed).toContain("/Do"); // Sib transposed by 2 semitones is Do (C)
+    expect(transposed).toContain("/C");  // Bb transposed by 2 semitones is C
+    expect(transposed).toContain("/Re#"); // Reb transposed by 2 semitones is Re#
+  });
 });

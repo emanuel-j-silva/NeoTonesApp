@@ -14,16 +14,16 @@ export class ArrangementTextTransposer {
 
         // Portuguese Solfege (traditional)
         "DO": Note.C, "DÓ": Note.C,
-        "DO#": Note.C_SHARP, "DÓ#": Note.C_SHARP, "DB": Note.C_SHARP,
+        "DO#": Note.C_SHARP, "DÓ#": Note.C_SHARP, "DOB": Note.B, "DÓB": Note.B, "DB": Note.C_SHARP,
         "RE": Note.D, "RÉ": Note.D,
-        "RE#": Note.D_SHARP, "RÉ#": Note.D_SHARP, "EB": Note.D_SHARP,
+        "RE#": Note.D_SHARP, "RÉ#": Note.D_SHARP, "REB": Note.C_SHARP, "RÉB": Note.C_SHARP, "EB": Note.D_SHARP, "MIB": Note.D_SHARP,
         "MI": Note.E,
         "FA": Note.F, "FÁ": Note.F,
-        "FA#": Note.F_SHARP, "FÁ#": Note.F_SHARP, "GB": Note.F_SHARP,
+        "FA#": Note.F_SHARP, "FÁ#": Note.F_SHARP, "FAB": Note.E, "GB": Note.F_SHARP, "SOLB": Note.F_SHARP,
         "SOL": Note.G,
-        "SOL#": Note.G_SHARP, "AB": Note.G_SHARP,
+        "SOL#": Note.G_SHARP, "AB": Note.G_SHARP, "LAB": Note.G_SHARP, "LÁB": Note.G_SHARP,
         "LA": Note.A, "LÁ": Note.A,
-        "LA#": Note.A_SHARP, "LÁ#": Note.A_SHARP, "BB": Note.A_SHARP,
+        "LA#": Note.A_SHARP, "LÁ#": Note.A_SHARP, "BB": Note.A_SHARP, "SIB": Note.A_SHARP,
         "SI": Note.B,
     };
 
@@ -31,10 +31,28 @@ export class ArrangementTextTransposer {
         const semitones = toTone.getNote().getOrdinal() - fromTone.getNote().getOrdinal();
         if (semitones === 0) return textContent;
 
-        return textContent.replace(/\[([A-Za-zÇçÁáÉéÍíÓóÚúÃãÕõ#b]+)([a-zA-Z0-9]*)\]/g, (match, noteStr, suffix) => {
-            const transposed = this.transposeNoteToken(noteStr, suffix, semitones);
-            return `[${transposed}]`;
+        // Transpose brackets [chord]
+        let result = textContent.replace(/\[([^\]]+)\]/g, (match, chordContent) => {
+            return `[${this.transposeChordContent(chordContent, semitones)}]`;
         });
+
+        // Transpose slash /chord
+        result = result.replace(/\/([A-Za-zÇçÁáÉéÍíÓóÚúÃãÕõ#b]+[a-zA-Z0-9/]*)/g, (match, chordContent) => {
+            return `/${this.transposeChordContent(chordContent, semitones)}`;
+        });
+
+        return result;
+    }
+
+    private static transposeChordContent(chordContent: string, semitones: number): string {
+        const parts = chordContent.split("/");
+        const transposedParts = parts.map((part) => {
+            const match = part.match(/^([A-Za-zÇçÁáÉéÍíÓóÚúÃãÕõ#b]+)(.*)$/);
+            if (!match) return part;
+            const [, noteStr, suffix] = match;
+            return this.transposeNoteToken(noteStr, suffix, semitones);
+        });
+        return transposedParts.join("/");
     }
 
     private static transposeNoteToken(noteStr: string, suffix: string, semitones: number): string {

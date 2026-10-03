@@ -33,14 +33,15 @@ export function ArrangementScreen({ route }: Props) {
   function renderFormattedChordChart(text: string) {
     const lines = text.split("\n");
     return lines.map((line, lineIdx) => {
-      const isSection = line.trim().startsWith("[") && line.trim().endsWith("]") && !line.includes(" ");
+      const trimmed = line.trim();
+      const isSection = trimmed.startsWith("[") && trimmed.endsWith("]") && !trimmed.includes(" ");
 
       if (isSection) {
         return (
           <View key={lineIdx} style={styles.sectionContainer}>
             <View style={styles.sectionMarkerRow}>
               <View style={styles.sectionBadge}>
-                <Text style={styles.sectionMarkerText}>{line.replace(/[\[\]]/g, "")}</Text>
+                <Text style={styles.sectionMarkerText}>{trimmed.replace(/[\[\]]/g, "")}</Text>
               </View>
               <View style={styles.sectionDividerLine} />
             </View>
@@ -48,13 +49,22 @@ export function ArrangementScreen({ route }: Props) {
         );
       }
 
-      const parts = line.split(/(\[[^\]]+\])/g);
+      const parts = line.split(/(\[[^\]]+\]|\/[A-Za-zÇçÁáÉéÍíÓóÚúÃãÕõ#b]+[a-zA-Z0-9/]*)/g);
 
       return (
         <Text key={lineIdx} style={styles.chartLine}>
           {parts.map((part, partIdx) => {
+            if (!part) return null;
             if (part.startsWith("[") && part.endsWith("]")) {
               const chord = part.slice(1, -1);
+              return (
+                <Text key={partIdx} style={styles.inlineChord}>
+                  {chord}{" "}
+                </Text>
+              );
+            }
+            if (part.startsWith("/")) {
+              const chord = part.slice(1);
               return (
                 <Text key={partIdx} style={styles.inlineChord}>
                   {chord}{" "}
@@ -111,7 +121,7 @@ export function ArrangementScreen({ route }: Props) {
             multiline
             value={arrangementText}
             onChangeText={handleEditText}
-            placeholder="Digite seu arranjo. Ex: [Fa#] Um grande [Si] sinal"
+            placeholder="Digite seu arranjo. Ex: /Fa# Um grande /Si sinal"
             placeholderTextColor={theme.colors.placeholder}
             textAlignVertical="top"
           />
