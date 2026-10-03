@@ -40,6 +40,16 @@ export function useLibraryViewModel() {
     }
   }
 
+  async function deleteMusic(id: string): Promise<void> {
+    setIsLoading(true);
+    try {
+      await dependencies.deleteMusicUseCase.execute(id);
+      await loadMusics();
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const filteredMusics = useMemo(() => {
     if (!search.trim()) {
       return musics;
@@ -56,6 +66,7 @@ export function useLibraryViewModel() {
     setSearch,
     isLoading,
     createNewMusic,
+    deleteMusic,
     refresh: loadMusics,
   };
 }

@@ -7,13 +7,10 @@ export const createStyles = (theme: AppTheme) =>
     container: {
       flexDirection: "row",
       alignItems: "center",
-
       backgroundColor: theme.colors.surface,
-
       borderWidth: 1,
-      borderColor:theme.colors.border,
+      borderColor: theme.colors.border,
       borderRadius: 16,
-
       padding: 16,
       marginBottom: 12,
     },
@@ -21,14 +18,10 @@ export const createStyles = (theme: AppTheme) =>
     iconContainer: {
       width: 48,
       height: 48,
-
       borderRadius: 12,
-
       justifyContent: "center",
       alignItems: "center",
-
       backgroundColor: theme.colors.iconBackground,
-
       marginRight: 12,
     },
 
@@ -50,5 +43,15 @@ export const createStyles = (theme: AppTheme) =>
       marginTop: 4,
       fontSize: 13,
       color: theme.colors.secondaryText,
+    },
+
+    deleteButton: {
+      padding: 8,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+
+    deleteButtonText: {
+      fontSize: 18,
     },
   });

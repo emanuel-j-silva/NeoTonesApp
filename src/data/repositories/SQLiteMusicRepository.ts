@@ -25,46 +25,6 @@ export class SQLiteMusicRepository implements MusicRepository {
                 text_content TEXT NOT NULL
             );
         `);
-
-        const all = await this.findAll();
-        if (all.length === 0) {
-            await this.seedInitialData();
-        }
-    }
-
-    private async seedInitialData() {
-        const initialMusics = [
-            new Music(
-                "salmo-23",
-                "Salmo 23",
-                new Arrangement(
-                    new Tone(Note.A, ScaleType.MINOR),
-                    [],
-                    "[INTRO]\n[La] [Re] [Mi7] [La]\n\n[VERSO 1]\nO [La] Senhor é o pastor [Re] que me conduz,\nNão [Sol] me falta [Do] coisa alguma.\n[Fa] Em prados e [Re] verdes matas\n[Mi7] Ele me faz repousar."
-                )
-            ),
-            new Music(
-                "magnificat",
-                "Magnificat",
-                new Arrangement(
-                    new Tone(Note.E, ScaleType.MAJOR),
-                    [],
-                    "[INTRO]\n[Mi] [La] [Si7] [Mi]\n\n[REFRÃO]\nA minha [Mi] alma engrandece ao [La] Senhor,\nE o meu [Si7] espírito exulta em Deus, meu [Mi] Salvador."
-                )
-            ),
-            new Music(
-                "um-grande-sinal",
-                "Um Grande Sinal",
-                new Arrangement(
-                    new Tone(Note.A, ScaleType.MINOR),
-                    [],
-                    "[INTRO]\n[Fa#] [Si] [La#] [La] [Sol#] [Sol] [Fa#] (X2)\n[Fa#] [Sol] [Fa#] [Fa] [Fa] [Fa#]\n[Fa#] [Si] [Re] [Si] [La#] [Si]\n\n[REFRÃO]\nUm [Si] Grande [Do#] sinal…\nUma [La] mulher [Do#] [Mi] [La] [Mi] [Do#]\nUma [Si] mulher [Re] vestida [Do#] de [Si] sol\nTendo [Si] a lua [Re] sob [Do#] os [Si] pés\nE uma coroa de doze estrelas\nEstá [Si] gravida [Re] e [Do#] grita [Si]\nCom tormentos, para dar a luz"
-                )
-            )
-        ];
-        for (const m of initialMusics) {
-            await this.save(m);
-        }
     }
 
     async save(music: Music): Promise<void> {

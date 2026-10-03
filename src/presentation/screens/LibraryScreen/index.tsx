@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, Text, View, Button, TouchableOpacity, TextInput, Modal, Alert } from "react-native";
+import { FlatList, Text, View, TouchableOpacity, TextInput, Modal, Alert, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -11,6 +11,7 @@ import { useLibraryViewModel } from "../../viewmodels/useLibraryViewModel";
 
 import { useTheme } from "../../../shared/theme/ThemeProvider";
 import { createStyles } from "./styles";
+import { darkTheme } from "../../../shared/theme/darkTheme";
 
 type HomeScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList, "Home">;
@@ -22,10 +23,10 @@ type Props = {
 export function HomeScreen({
   navigation,
 }: Props) {
-  const { toggleTheme, theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const styles = createStyles(theme);
 
-  const { musics, search, setSearch, createNewMusic } = useLibraryViewModel();
+  const { musics, search, setSearch, createNewMusic, deleteMusic } = useLibraryViewModel();
   const [modalVisible, setModalVisible] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 
@@ -44,18 +45,50 @@ export function HomeScreen({
     }
   }
 
+  function handleDelete(id: string, title: string) {
+    Alert.alert(
+      "Excluir Música",
+      `Deseja realmente excluir "${title}"?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Excluir",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await deleteMusic(id);
+            } catch (e: any) {
+              Alert.alert("Erro", "Não foi possível excluir a música.");
+            }
+          },
+        },
+      ]
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerRow}>
         <Text style={styles.title}>
           NeoTones
         </Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setModalVisible(true)}
-        >
-          <Text style={styles.addButtonText}>+ Nova Música</Text>
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <View style={styles.themeToggleRow}>
+            <Text style={styles.themeLabel}>{theme === darkTheme ? "🌙" : "☀️"}</Text>
+            <Switch
+              value={theme === darkTheme}
+              onValueChange={toggleTheme}
+              trackColor={{ false: "#767577", true: theme.colors.primary }}
+              thumbColor={"#f4f3f4"}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.addButtonText}>+ Nova</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <SearchBar
@@ -82,16 +115,10 @@ export function HomeScreen({
                 }
               )
             }
+            onDelete={() => handleDelete(item.getId(), item.getTitle())}
           />
         )}
       />
-
-      <View style={styles.footerRow}>
-        <Button
-          title="Trocar tema"
-          onPress={toggleTheme}
-        />
-      </View>
 
       <Modal
         visible={modalVisible}

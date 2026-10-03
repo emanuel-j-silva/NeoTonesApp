@@ -23,6 +23,12 @@ export const createStyles = (theme: AppTheme) =>
     color: theme.colors.text,
   },
 
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+
   addButton: {
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 14,
@@ -36,9 +42,20 @@ export const createStyles = (theme: AppTheme) =>
     fontSize: 14,
   },
 
-  footerRow: {
-    marginVertical: 12,
+  themeToggleRow: {
+    flexDirection: "row",
     alignItems: "center",
+    gap: 4,
+    backgroundColor: theme.colors.surface,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+  },
+
+  themeLabel: {
+    fontSize: 16,
   },
 
   modalOverlay: {
